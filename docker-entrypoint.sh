@@ -63,10 +63,11 @@ if [ -r /etc/nginx.conf -a -s /etc/nginx.conf ]; then
   ln -fs /etc/nginx.conf /etc/nginx/nginx.conf
 else
   /dckrz -template /etc/nginx/nginx.tmpl:/etc/nginx/nginx.conf
-fi
 
-/dckrz -wait ${DNS3L_DAEMON_URL}/info -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DNS3L daemon is there."
-/dckrz -wait ${DNS3L_AUTH_URL}/.well-known/openid-configuration -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DexIDP is there."
+  # Template usage is waiting for deps...
+  /dckrz -wait ${DNS3L_DAEMON_URL}/info -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DNS3L daemon is there."
+  /dckrz -wait ${DNS3L_AUTH_URL}/.well-known/openid-configuration -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DexIDP is there."
+fi
 
 ###
 ### Bootstrap TLS...
