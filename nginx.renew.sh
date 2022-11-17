@@ -5,9 +5,10 @@ function random_token() {
 }
 
 DNS3L_FQDN=${DNS3L_FQDN:-localhost}
+DNS3L_FQDN_CA=${DNS3L_FQDN_CA:-les}
 DNS3L_AUTH_URL=${DNS3L_AUTH_URL:-"https://auth:5554/auth"}
 DNS3L_DAEMON_URL=${DNS3L_DAEMON_URL:-"http://dns3ld:8880/api"}
-CERT_URL=${DNS3L_DAEMON_URL}/ca/les/crt/${DNS3L_FQDN}
+CERT_URL=${DNS3L_DAEMON_URL}/ca/${DNS3L_FQDN_CA}/crt/${DNS3L_FQDN}
 
 SRV_HOST=${SRV_HOST:-ingress}
 SRV_PORT=${SRV_PORT:-443}

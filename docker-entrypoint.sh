@@ -73,7 +73,8 @@ fi
 ### Bootstrap TLS...
 ###
 
-CERT_URL=${DNS3L_DAEMON_URL}/ca/les/crt/${DNS3L_FQDN}
+DNS3L_FQDN_CA=${DNS3L_FQDN_CA:-les}
+CERT_URL=${DNS3L_DAEMON_URL}/ca/${DNS3L_FQDN_CA}/crt/${DNS3L_FQDN}
 CLIENT_ID=${CLIENT_ID:-"dns3l-api"}
 CLIENT_SECRET=${CLIENT_SECRET:-$(random_token)}
 DNS3L_USER=${DNS3L_USER:-certbot}
@@ -104,6 +105,7 @@ if [[ $? != "0" ]]; then
   found=0
 fi
 set -e
+sync
 
 if [[ $found == "0" ]]; then
   echo Generate selfsigned cert/key pair
@@ -114,6 +116,9 @@ if [[ $found == "0" ]]; then
               -addext "keyUsage=critical,digitalSignature,keyAgreement" \
               -addext "extendedKeyUsage=serverAuth" \
               -addext "subjectAltName=DNS:localhost,IP:127.0.0.1" 2>/dev/null
+else
+  echo Key ${CERT_URL}/pem/key applied.
+  echo Cert ${CERT_URL}/pem/fullchain applied.
 fi
 
 ###
