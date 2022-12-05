@@ -1,0 +1,7 @@
+# 1.0.0 (2022-11-17)
+
+
+### Features
+
+* Try initial release ([#1](https://github.com/dns3l/ingress/issues/1)) ([6b07149](https://github.com/dns3l/ingress/commit/6b0714902bab80d7f0b107168f5d5557189b322b))
+* Try initial release ([#2](https://github.com/dns3l/ingress/issues/2)) ([75f9112](https://github.com/dns3l/ingress/commit/75f911244ade203975b9f60c12e4cc19fd47e6d9))
