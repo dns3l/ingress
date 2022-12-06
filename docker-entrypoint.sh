@@ -86,7 +86,9 @@ fi
 ###
 
 DNS3L_FQDN_CA=${DNS3L_FQDN_CA:-les}
-CERT_URL=${DNS3L_BOOT_DAEMON_URL}/ca/${DNS3L_FQDN_CA}/crt/${DNS3L_FQDN}
+read -a fqdns <<< $DNS3L_FQDN
+CERT_NAME=${fqdns[0]} # first FQDN is the cert name
+CERT_URL=${DNS3L_BOOT_DAEMON_URL}/ca/${DNS3L_FQDN_CA}/crt/${CERT_NAME}
 CLIENT_ID=${CLIENT_ID:-"dns3l-api"}
 CLIENT_SECRET=${CLIENT_SECRET:-$(random_token)}
 DNS3L_USER=${DNS3L_USER:-certbot}
@@ -123,7 +125,7 @@ if [[ $found == "0" ]]; then
   echo Generate selfsigned cert/key pair
   openssl req -x509 -batch -newkey rsa:4096 -sha256 -days 90 -nodes \
               -keyout /etc/nginx/privkey.pem -out /etc/nginx/fullchain.pem \
-              -subj "/CN=${DNS3L_FQDN}" \
+              -subj "/CN=${CERT_NAME}" \
               -addext "basicConstraints=CA:false" \
               -addext "keyUsage=critical,digitalSignature,keyAgreement" \
               -addext "extendedKeyUsage=serverAuth" \
