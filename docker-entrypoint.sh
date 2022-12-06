@@ -56,8 +56,15 @@ fi
 
 export DNS3L_FQDN=${DNS3L_FQDN:-localhost}
 export DNS3L_APP_URL=${DNS3L_APP_URL:-"http://web:3000"}
-export DNS3L_AUTH_URL=${DNS3L_AUTH_URL:-"https://auth:5554/auth"}
+export DNS3L_AUTH_URL=${DNS3L_AUTH_URL:-"https://auth1:5554/auth"}
 export DNS3L_DAEMON_URL=${DNS3L_DAEMON_URL:-"http://dns3ld:8880/api"}
+
+# Review dead lock behavior once authn is enabled in dns3ld
+#   https://github.com/dns3l/ingress/issues/3
+#   https://github.com/dns3l/dns3l-core/issues/19
+# Workaround to allow another dns3ld that just provides the cert for the ingress
+DNS3L_BOOT_DAEMON_URL=${DNS3L_BOOT_DAEMON_URL:-"http://dns3ld:8880/api"}
+DNS3L_BOOT_AUTH_URL=${DNS3L_BOOT_AUTH_URL:-"https://auth:5554/auth"}
 
 if [ -r /etc/nginx.conf -a -s /etc/nginx.conf ]; then
   ln -fs /etc/nginx.conf /etc/nginx/nginx.conf
@@ -65,7 +72,12 @@ else
   /dckrz -template /etc/nginx/nginx.tmpl:/etc/nginx/nginx.conf
 
   # Template usage is waiting for deps...
-  /dckrz -wait ${DNS3L_DAEMON_URL}/info -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DNS3L daemon is there."
+  # Review dead lock behavior once authn is enabled in dns3ld
+  #   https://github.com/dns3l/ingress/issues/3
+  #   https://github.com/dns3l/dns3l-core/issues/19
+  /dckrz -wait ${DNS3L_BOOT_DAEMON_URL}/info -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DNS3L bootstrap daemon is there."
+  /dckrz -wait ${DNS3L_BOOT_AUTH_URL}/.well-known/openid-configuration -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DexIDP bootstrap is there."
+  #/dckrz -wait ${DNS3L_DAEMON_URL}/info -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DNS3L daemon is there."
   /dckrz -wait ${DNS3L_AUTH_URL}/.well-known/openid-configuration -skip-tls-verify -timeout ${SERVICE_TIMEOUT} -- echo "Ok. DexIDP is there."
 fi
 
@@ -74,7 +86,9 @@ fi
 ###
 
 DNS3L_FQDN_CA=${DNS3L_FQDN_CA:-les}
-CERT_URL=${DNS3L_DAEMON_URL}/ca/${DNS3L_FQDN_CA}/crt/${DNS3L_FQDN}
+read -a fqdns <<< $DNS3L_FQDN
+CERT_NAME=${fqdns[0]} # first FQDN is the cert name
+CERT_URL=${DNS3L_BOOT_DAEMON_URL}/ca/${DNS3L_FQDN_CA}/crt/${CERT_NAME}
 CLIENT_ID=${CLIENT_ID:-"dns3l-api"}
 CLIENT_SECRET=${CLIENT_SECRET:-$(random_token)}
 DNS3L_USER=${DNS3L_USER:-certbot}
@@ -84,7 +98,7 @@ found=1
 
 ID_TOKEN=`curl -k -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
   -d "grant_type=password&scope=openid profile email groups offline_access&username=${DNS3L_USER}&password=${DNS3L_PASS}" \
-  ${DNS3L_AUTH_URL}/token | jq -r .id_token`
+  ${DNS3L_BOOT_AUTH_URL}/token | jq -r .id_token`
 
 if [[ -z ${ID_TOKEN} || ${ID_TOKEN} == "null" ]]; then
   echo Oooops. Invalid token.
@@ -111,7 +125,7 @@ if [[ $found == "0" ]]; then
   echo Generate selfsigned cert/key pair
   openssl req -x509 -batch -newkey rsa:4096 -sha256 -days 90 -nodes \
               -keyout /etc/nginx/privkey.pem -out /etc/nginx/fullchain.pem \
-              -subj "/CN=${DNS3L_FQDN}" \
+              -subj "/CN=${CERT_NAME}" \
               -addext "basicConstraints=CA:false" \
               -addext "keyUsage=critical,digitalSignature,keyAgreement" \
               -addext "extendedKeyUsage=serverAuth" \

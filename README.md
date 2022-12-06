@@ -27,3 +27,41 @@
 If `CERT_URL` doesn't exist a selfsigned is created instead.
 
 Mount a custom nginx config to `/etc/nginx.conf` if environment based template seems not sufficient.
+
+### Multihomed
+
+If you need to provide multiple URL for DNS3L stack, there is the issue that [Dex][2] always publishes a single issuer URL to the client.
+
+In that case you can spawn multiple Dex instances that share the same config expect the issuer URL
+
+```yaml
+# dex instance 1
+issuer: https://dns3l.example.com/auth
+
+# dex instance 2
+issuer: https://foo.example.com/auth
+
+# dex instance 3
+issuer: https://bar.example.com/auth
+```
+
+and set `DNS3L_FQDN` to `dns3l.example.com foo.example.com bar.example.com`. Space separated.
+The first name is the certificate name by convention. Make sure the following names are included as SAN.
+
+Or you mount a custom nginx config with the following tweaks.
+
+```nginx
+  map $host $auth {
+    dns3l.example.com https://auth1:5554/auth;
+    foo.example.com https://auth2:5554/auth;
+    bar.example.com https://auth3:5554/auth;
+    default https://auth:5554/auth;
+  }
+  server {
+    server_name dns3l.example.com foo.example.com bar.example.com;
+  }
+```
+
+
+
+[2]: https://dexidp.io/
