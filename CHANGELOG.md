@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/dns3l/ingress/compare/v1.0.0...v1.0.1) (2022-12-06)
+
+
+### Bug Fixes
+
+* multi/proxy auth ([#6](https://github.com/dns3l/ingress/issues/6)) ([cfaedec](https://github.com/dns3l/ingress/commit/cfaedec00297929031474530923949c357ff660f)), closes [#3](https://github.com/dns3l/ingress/issues/3) [#4](https://github.com/dns3l/ingress/issues/4)
+
 # 1.0.0 (2022-11-17)
 
 
