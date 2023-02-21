@@ -18,6 +18,8 @@
 | DNS3L_APP_URL | nuxt endpoint | `http://web:3000` |
 | DNS3L_AUTH_URL | dex endpoint | `https://auth:5554/auth` |
 | DNS3L_DAEMON_URL | dns3ld endpoint | `http://dns3ld:8880/api` |
+| DNS3L_API_TIMEOUT | dns3ld read timeout | `6m` |
+| DNS3L_AUTH_TIMEOUT | dex/auth read timeout | `2m` |
 | CERT_URL | bootstrap certificate for FQDN | `${DNS3L_DAEMON_URL}/ca/les/crt/${DNS3L_FQDN}` |
 | CLIENT_ID | auth client ID | `dns3l-api` |
 | CLIENT_SECRET | auth client secret | random |
