@@ -58,6 +58,8 @@ export DNS3L_FQDN=${DNS3L_FQDN:-localhost}
 export DNS3L_APP_URL=${DNS3L_APP_URL:-"http://web:3000"}
 export DNS3L_AUTH_URL=${DNS3L_AUTH_URL:-"https://auth1:5554/auth"}
 export DNS3L_DAEMON_URL=${DNS3L_DAEMON_URL:-"http://dns3ld:8880/api"}
+export DNS3L_API_TIMEOUT=${DNS3L_API_TIMEOUT:-6m}
+export DNS3L_AUTH_TIMEOUT=${DNS3L_AUTH_TIMEOUT:-2m}
 
 # Review dead lock behavior once authn is enabled in dns3ld
 #   https://github.com/dns3l/ingress/issues/3
