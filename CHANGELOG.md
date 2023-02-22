@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/dns3l/ingress/compare/v1.0.1...v1.0.2) (2023-02-22)
+
+
+### Bug Fixes
+
+* Flex timeout settings ([#15](https://github.com/dns3l/ingress/issues/15)) ([edc4d68](https://github.com/dns3l/ingress/commit/edc4d683f961c375b5ef5a4334dc860d98c7a4f4))
+
 ## [1.0.1](https://github.com/dns3l/ingress/compare/v1.0.0...v1.0.1) (2022-12-06)
 
 
