@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/dns3l/ingress/compare/v1.0.2...v1.0.3) (2023-03-09)
+
+
+### Bug Fixes
+
+* **docker:** Hotfix [#17](https://github.com/dns3l/ingress/issues/17) ([f2855a7](https://github.com/dns3l/ingress/commit/f2855a790abcc05ebfdca68655a45107bd4fdb0d))
+
 ## [1.0.2](https://github.com/dns3l/ingress/compare/v1.0.1...v1.0.2) (2023-02-22)
 
 
