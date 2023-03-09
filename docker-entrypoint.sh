@@ -128,7 +128,6 @@ if [[ $found == "0" ]]; then
   openssl req -x509 -batch -newkey rsa:4096 -sha256 -days 90 -nodes \
               -keyout /etc/nginx/privkey.pem -out /etc/nginx/fullchain.pem \
               -subj "/CN=${CERT_NAME}" \
-              -addext "basicConstraints=CA:false" \
               -addext "keyUsage=critical,digitalSignature,keyAgreement" \
               -addext "extendedKeyUsage=serverAuth" \
               -addext "subjectAltName=DNS:localhost,IP:127.0.0.1" 2>/dev/null
