@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/dns3l/ingress/compare/v1.0.3...v1.0.4) (2023-03-16)
+
+
+### Bug Fixes
+
+* Add CORS header [#18](https://github.com/dns3l/ingress/issues/18) ([#19](https://github.com/dns3l/ingress/issues/19)) ([8eb6d0d](https://github.com/dns3l/ingress/commit/8eb6d0d532d6044063e1f72db93633a158d7ca4f))
+
 ## [1.0.3](https://github.com/dns3l/ingress/compare/v1.0.2...v1.0.3) (2023-03-09)
 
 
