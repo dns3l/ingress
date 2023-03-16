@@ -43,6 +43,31 @@ function random_token() {
   tr -cd '[:alnum:]' </dev/urandom | fold -w32 | head -n1
 }
 
+# inspired by https://www.rfc-editor.org/rfc/rfc3986#appendix-B
+# //URL prefix required. Not for IPv6 ([2001:db8::7]) addresses.
+readonly URI_REGEX='^(([^:/?#]+):)?(//((([^:/?#]+)@)?([^:/?#]+)(:([0-9]+))?))?(/([^?#]*))?(\?([^#]*))?(#(.*))?'
+protFromURL () {
+    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[2],,}"
+}
+hostFromURL () {
+    [[ "$@" =~ $URI_REGEX ]] && echo "${BASH_REMATCH[7],,}"
+}
+portFromURL () {
+    if [[ "$@" =~ $URI_REGEX ]]; then
+      if [[ -z "${BASH_REMATCH[9]}" ]]; then
+        case "${BASH_REMATCH[2],,}" in
+          # some default ports...
+          http)  echo "80" ;;
+          https) echo "443" ;;
+          ldap)  echo "389" ;;
+          ldaps) echo "636" ;;
+        esac
+      else
+        echo "${BASH_REMATCH[9]}"
+      fi
+    fi
+}
+
 SERVICE_TIMEOUT=${SERVICE_TIMEOUT:-300s} # wait for dependencies
 
 echo Running: "$@"
@@ -55,9 +80,12 @@ if [[ ! -e /.bootstrapped ]]; then
 fi
 
 export DNS3L_FQDN=${DNS3L_FQDN:-localhost}
+
 export DNS3L_APP_URL=${DNS3L_APP_URL:-"http://web:3000"}
 export DNS3L_AUTH_URL=${DNS3L_AUTH_URL:-"https://auth1:5554/auth"}
 export DNS3L_DAEMON_URL=${DNS3L_DAEMON_URL:-"http://dns3ld:8880/api"}
+
+export DNS3L_APP_TIMEOUT=${DNS3L_APP_TIMEOUT:-1m}
 export DNS3L_API_TIMEOUT=${DNS3L_API_TIMEOUT:-6m}
 export DNS3L_AUTH_TIMEOUT=${DNS3L_AUTH_TIMEOUT:-2m}
 
