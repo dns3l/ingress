@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/dns3l/ingress/compare/v1.0.4...v1.0.5) (2024-01-04)
+
+
+### Bug Fixes
+
+* Cert selfcare [#24](https://github.com/dns3l/ingress/issues/24) ([#25](https://github.com/dns3l/ingress/issues/25)) ([3b6f520](https://github.com/dns3l/ingress/commit/3b6f5206dc4a5551b5bf3acca6d90b673b6b9780))
+
 ## [1.0.4](https://github.com/dns3l/ingress/compare/v1.0.3...v1.0.4) (2023-03-16)
 
 

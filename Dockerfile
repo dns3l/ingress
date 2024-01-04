@@ -2,9 +2,9 @@ FROM nginx:1.25-alpine
 
 LABEL org.opencontainers.image.title="dns3l NGINX ingress"
 LABEL org.opencontainers.image.description="A docker compose ingress for DNS3L"
-LABEL org.opencontainers.image.version=1.0.4
+LABEL org.opencontainers.image.version=1.0.5
 
-ENV VERSION=1.0.4
+ENV VERSION=1.0.5
 
 ENV PAGER=less
 
