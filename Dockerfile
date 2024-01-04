@@ -1,4 +1,4 @@
-FROM nginx:1.23-alpine
+FROM nginx:1.25-alpine
 
 LABEL org.opencontainers.image.title="dns3l NGINX ingress"
 LABEL org.opencontainers.image.description="A docker compose ingress for DNS3L"
@@ -27,7 +27,7 @@ ENV _variant=${TARGETVARIANT:-}
 # coreutils setup timeout and fixing a bug in wait-for-it.sh
 # with BusyBox timeout
 RUN apk --update upgrade && \
-    apk add --no-cache coreutils \
+    apk add --no-cache tini coreutils \
         ca-certificates curl less bash busybox-extras \
         sudo jq wget dcron openssl bind-tools joe
 

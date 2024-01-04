@@ -93,8 +93,8 @@ export DNS3L_AUTH_TIMEOUT=${DNS3L_AUTH_TIMEOUT:-2m}
 #   https://github.com/dns3l/ingress/issues/3
 #   https://github.com/dns3l/dns3l-core/issues/19
 # Workaround to allow another dns3ld that just provides the cert for the ingress
-DNS3L_BOOT_DAEMON_URL=${DNS3L_BOOT_DAEMON_URL:-"http://dns3ld:8880/api"}
-DNS3L_BOOT_AUTH_URL=${DNS3L_BOOT_AUTH_URL:-"https://auth:5554/auth"}
+export DNS3L_BOOT_DAEMON_URL=${DNS3L_BOOT_DAEMON_URL:-"http://dns3ld:8880/api"}
+export DNS3L_BOOT_AUTH_URL=${DNS3L_BOOT_AUTH_URL:-"https://auth:5554/auth"}
 
 if [ -r /etc/nginx.conf -a -s /etc/nginx.conf ]; then
   ln -fs /etc/nginx.conf /etc/nginx/nginx.conf
@@ -168,8 +168,8 @@ fi
 ### Start cron...
 ###
 
-crond -L/dev/null
- 
+crond -lnotice -L/proc/1/fd/1
+
 ###
 ### Start nginx...
 ###
