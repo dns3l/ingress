@@ -1,4 +1,4 @@
-FROM nginx:1.25-alpine
+FROM nginx:1.29.0-alpine
 
 LABEL org.opencontainers.image.title="dns3l NGINX ingress"
 LABEL org.opencontainers.image.description="A docker compose ingress for DNS3L"
@@ -33,8 +33,8 @@ RUN apk --update upgrade && \
 
 # Install dockerize
 #
-ENV DCKRZ_VERSION="0.16.3"
-RUN _arch=${_arch/amd64/x86_64} && curl -fsSL https://github.com/powerman/dockerize/releases/download/v$DCKRZ_VERSION/dockerize-${_os}-${_arch}${_variant} > /dckrz && \
+ENV DCKRZ_VERSION="0.23.1"
+RUN curl -fsSL https://github.com/powerman/dockerize/releases/download/v$DCKRZ_VERSION/dockerize-v${DCKRZ_VERSION}-${_os}-${_arch}${_variant} > /dckrz && \
     chmod a+x /dckrz
 
 RUN curl -fsSL https://ssl-config.mozilla.org/ffdhe2048.txt > /etc/nginx/dhparam
