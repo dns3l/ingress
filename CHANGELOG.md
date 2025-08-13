@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/dns3l/ingress/compare/v1.0.5...v1.0.6) (2025-08-13)
+
+
+### Bug Fixes
+
+* bump nginx, dockerize ([#26](https://github.com/dns3l/ingress/issues/26)) ([58559e9](https://github.com/dns3l/ingress/commit/58559e995fb5f4dd81bb8345ef745ea329717a33))
+
 ## [1.0.5](https://github.com/dns3l/ingress/compare/v1.0.4...v1.0.5) (2024-01-04)
 
 
