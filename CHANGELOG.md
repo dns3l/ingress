@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dns3l/ingress/compare/v1.0.6...v1.1.0) (2025-09-02)
+
+
+### Features
+
+* token-based auth for bootstrapping/renewing nginx cert ([#27](https://github.com/dns3l/ingress/issues/27)) ([b3414c9](https://github.com/dns3l/ingress/commit/b3414c95e746c3401666cc682a3fb3421f464728))
+
 ## [1.0.6](https://github.com/dns3l/ingress/compare/v1.0.5...v1.0.6) (2025-08-13)
 
 
