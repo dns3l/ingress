@@ -108,13 +108,13 @@ CERT_URL=${DNS3L_BOOT_DAEMON_URL}/ca/${DNS3L_FQDN_CA}/crt/${CERT_NAME}
 found=1
 
 set +e
-curl -k -s -H "X-DNS3L-Access-Token: ${DNS3L_TOKEN}" ${CERT_URL}/pem/key |\
+curl -k -s -H "X-DNS3L-API-Key: ${DNS3L_TOKEN}" ${CERT_URL}/pem/key |\
   tee /etc/nginx/privkey.pem | grep -q -- '-----BEGIN .* PRIVATE KEY-----'
 if [[ $? != "0" ]]; then
   echo Oooops. Key ${CERT_URL}/pem/key not found.
   found=0
 fi
-curl -k -s -H "X-DNS3L-Access-Token: ${DNS3L_TOKEN}" ${CERT_URL}/pem/fullchain |\
+curl -k -s -H "X-DNS3L-API-Key: ${DNS3L_TOKEN}" ${CERT_URL}/pem/fullchain |\
   tee /etc/nginx/fullchain.pem | grep -q -- '-----BEGIN CERTIFICATE-----'
 if [[ $? != "0" ]]; then
   echo Oooops. Cert ${CERT_URL}/pem/fullchain not found.
