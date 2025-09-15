@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/dns3l/ingress/compare/v1.1.0...v1.1.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* changed header name for token-based auth ([#28](https://github.com/dns3l/ingress/issues/28)) ([5dd0f18](https://github.com/dns3l/ingress/commit/5dd0f18fc0a9648cabcca79628168e082c9b2953))
+
 # [1.1.0](https://github.com/dns3l/ingress/compare/v1.0.6...v1.1.0) (2025-09-02)
 
 
