@@ -24,7 +24,7 @@ LOG=/proc/1/fd/1
 echo "[$(date)] Cert selfcare: Check for (re)new(ed) cert..." >$LOG
 
 # grab SSL TTL from DNS3L for our service
-DNS3L_TTL=`curl -k -s -H "X-DNS3L-Access-Token: ${DNS3L_TOKEN}" ${CERT_URL}/pem/crt |\
+DNS3L_TTL=`curl -k -s -H "X-DNS3L-API-Key: ${DNS3L_TOKEN}" ${CERT_URL}/pem/crt |\
   openssl x509 -noout -dates 2>/dev/null | grep ^notAfter | cut -d= -f2`
 
 # compare...
@@ -39,8 +39,8 @@ elif [ "$DNS3L_TTL" != "$SRV_TTL" ]; then
 
   # install the renewed cert into our service
   # REVIEW: dangerous... in case of curl failure.
-  curl -k -s -H "X-DNS3L-Access-Token: ${DNS3L_TOKEN}" ${CERT_URL}/pem/key > /etc/nginx/privkey.pem
-  curl -k -s -H "X-DNS3L-Access-Token: ${DNS3L_TOKEN}" ${CERT_URL}/pem/fullchain > /etc/nginx/fullchain.pem
+  curl -k -s -H "X-DNS3L-API-Key: ${DNS3L_TOKEN}" ${CERT_URL}/pem/key > /etc/nginx/privkey.pem
+  curl -k -s -H "X-DNS3L-API-Key: ${DNS3L_TOKEN}" ${CERT_URL}/pem/fullchain > /etc/nginx/fullchain.pem
 
   # restart/reload our service...
   kill -s SIGHUP 1
