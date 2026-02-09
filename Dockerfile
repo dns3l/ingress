@@ -1,4 +1,4 @@
-FROM nginx:1.28.0-alpine@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284
+FROM nginx:1.29.5-alpine@sha256:1d13701a5f9f3fb01aaa88cef2344d65b6b5bf6b7d9fa4cf0dca557a8d7702ba
 
 LABEL org.opencontainers.image.title="dns3l NGINX ingress"
 LABEL org.opencontainers.image.description="A docker compose ingress for DNS3L"
